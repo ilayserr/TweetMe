@@ -9,6 +9,6 @@ To run locally:
 1. In the cmd/terminal:  npm install.
 2. In the cmd/terminal:  heroku local    or    npm start.
 3. Enter http://localhost:5000
-4. Tweet / get tweets
+4. Tweet / get tweets / get most relevant hashtags (according to last 10,000 tweets)
 
 Thank you for the test

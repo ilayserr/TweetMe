@@ -35,10 +35,21 @@ Email : ilay92@gmail.com
 
                 <!-- the get tweets section -->
                 <form action="/get_tweets" method="get">
-                    <label for="get_tweets"> <h4> Enter the subject you want to see tweets about and the number of tweets: </h4> </label>
+                    <label for="get_tweets"> <h4> Enter the subject you want to see tweets about and the number of tweets:
+                    <br> prefrence with hashtag befor (#). </h4> </label>
                     <br>
-                    <input id="g_tweets" input type="text" name="search_word" placeholder="despacito"> 
+                    <input id="g_tweets" input type="text" name="search_word" placeholder="#despacito"> 
                     <input id="num_tweets" input type="text" name="num_search" style="width: 30px;" value=5> 
+                    <input type="submit" value="Search">
+                </form>
+                <br> 
+                <br>
+
+                <!-- the get similar hashtags section -->
+                <form action="/get_hashtags" method="get">
+                    <label for="get_hashtagss"> <h4> Enter a hashtag and you will get the most similiar hashtags according to the latest users tweets: </h4> </label>
+                    <br>
+                    <input id="g_hashtagss" input type="text" name="search_hashtag" placeholder="#sky"> 
                     <input type="submit" value="Search">
                 </form>
                 <br> 

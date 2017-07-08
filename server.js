@@ -72,11 +72,61 @@ app.get('/get_tweets', function(req, res){
 
     // Presenting the relevant data
     for (var i = 0; i < numStatuses; i++) {
+      console.log(tweets[i].entities.hashtags);
       result = 'user name:  ' + tweets[i].user.screen_name + 
                '\nposted on:  ' + tweets[i].created_at +
                '\npost:       ' + tweets[i].text + "\n\n";
       res.write(result);
       
+    }
+    res.end();
+  })
+});
+
+// Get tweets according to the user input
+app.get('/get_hashtags', function(req, res){
+  
+  // Handling the data from the user
+  var data1 = req.query.search_hashtag;
+  if (data1 == "") return;
+
+  // Using the twitter api inorder to get tweets back
+  // This is according to the last 10,000 tweets
+  Twitter.get('search/tweets', { q: data1, count: 10000 }, function(err, data, response) {
+    var tweets = data.statuses;
+    var numStatuses = tweets.length;
+    if (numStatuses == 0) return;
+    var result = [];
+    var maxNum = 11;
+
+    // moving all hashtags into an array
+    for (var i = 0; i < numStatuses; i++) {
+      var numOfHashtags = tweets[i].entities.hashtags.length;
+      for(var j = 0; j < numOfHashtags; j++) {
+        result.push(tweets[i].entities.hashtags[j].text);
+      }
+    }
+    if (result.length < maxNum) maxNum = result.length;
+    // creating an object with count for each hashtag
+    var obj = {};
+    for (var i = 0, j = result.length; i < j; i++) {
+      obj[result[i]] = (obj[result[i]] || 0) + 1;  
+    }
+
+    // getting the keys with the highest values
+    function getKeysWithHighestValue(obj, n){
+      var keys = Object.keys(obj);
+      keys.sort(function(a,b){
+        return obj[b] - obj[a];
+      })
+      return keys.slice(0,n);
+    } 
+    
+    // took 11 values inorder to exclude the hashtag we searched
+    topten = getKeysWithHighestValue(obj, maxNum);
+    res.write("The " + (maxNum - 1) + " most similiar hashtags to " + req.query.search_hashtag + " are:\n")
+    for (var i = 1; i < maxNum; i++) {
+      res.write(topten[i] + "\n");
     }
     res.end();
   })
