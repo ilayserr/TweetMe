@@ -1,0 +1,78 @@
+<!--
+This is Ilay Serr solution for the RapidApi test
+File Name : index.html
+Author : Ilay Serr
+Email : ilay92@gmail.com
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>TweetMe app</title>
+
+        <!-- load bootstrap and the personal stylesheet - style.css-->
+        <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/superhero/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="css/style.css">
+
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="jumbotron">
+                <center>
+                <h1>This Is TweetMe</h1>
+                    
+                <!-- the post tweet section -->    
+                <form action="/send_tweet" method="get">
+                    <label for="tweet"> <h4> Enter your tweet: </h4> </label>
+                    <br>
+                    <input id="tweet" type="text" name="tweet_contex" placeholder="I Love RapidApi">
+                    <input type="button" value="tweet" onclick="handle_data()">
+                </form>
+                <br>
+                <br>
+
+                <!-- the get tweets section -->
+                <form action="/get_tweets" method="get">
+                    <label for="get_tweets"> <h4> Enter the subject you want to see tweets about and the number of tweets: </h4> </label>
+                    <br>
+                    <input id="g_tweets" input type="text" name="search_word" placeholder="despacito"> 
+                    <input id="num_tweets" input type="text" name="num_search" style="width: 30px;" value=5> 
+                    <input type="submit" value="Search">
+                </form>
+                <br> 
+                <br>
+
+                <!-- the validate tweet section -->
+                <h5> In case you want to see this is actually working </h5>
+                <a href="https://twitter.com/rapidApiTest" class="btn btn-primary btn-lg"> My Twitter account </a>
+                </center>
+                
+                <!-- javaScript function -->
+                <script>
+                    function handle_data() {
+                        var http = new XMLHttpRequest();
+                        var data = document.getElementById("tweet").value;
+                        if (data.length == 0) {
+                            return;
+                        }
+                        http.open("POST", "/send_tweet", true);
+
+                        //Send the proper header information along with the request
+                        http.setRequestHeader("Content-type", "application/json;charset=UTF-8");
+
+                        //Call a function when the state changes.
+                        http.onreadystatechange = function() { 
+                            if(http.readyState == 4 && http.status == 200) {
+                                alert(http.responseText);
+                            }
+                        }
+                        var tweet = JSON.stringify({status: data});
+                        http.send(tweet);
+                    }
+                </script>
+            </div>
+        </div>     
+    </body>
+</html>
