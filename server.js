@@ -72,7 +72,6 @@ app.get('/get_tweets', function(req, res){
 
     // Presenting the relevant data
     for (var i = 0; i < numStatuses; i++) {
-      console.log(tweets[i].entities.hashtags);
       result = 'user name:  ' + tweets[i].user.screen_name + 
                '\nposted on:  ' + tweets[i].created_at +
                '\npost:       ' + tweets[i].text + "\n\n";
