@@ -1,4 +1,4 @@
-This is Ilay Serr solution for the RapidApi test
+A webapp that let you use a few of the twitter api features.
 Author : Ilay Serr
 Email : ilay92@gmail.com
 
